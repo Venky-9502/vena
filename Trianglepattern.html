@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Triangle Pattern</title>
+  <style>
+    body {
+      font-family: monospace;
+      background-color: #2418ab;
+      padding: 20px;
+    }
+    pre {
+      color: #cd0f0f;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <pre id="pattern"></pre>
+
+  <script>
+    const patternElement = document.getElementById('pattern');
+    let triangle = '';
+
+    for (let i = 1; i <= 5; i++) {
+      triangle += '*'.repeat(i) + '\n';
+    }
+
+    patternElement.textContent = triangle;
+  </script>
+</body>
+</html>
+
