@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Grading System</title>
+</head>
+<body>
+  <h2>Student Grading System</h2>
+  <form id="marksForm" autocomplete="off">
+    <label for="studentName">Student Name:</label>
+    <input type="text" id="studentName" required>
+    <label for="subjectName">Subject Name:</label>
+    <input type="text" id="subjectName" required>
+    <label for="studentMarks">Marks:</label>
+    <input type="number" id="studentMarks" min="0" max="100" required>
+    <button type="submit">Add Student</button>
+  </form>
+  <div id="output"></div>
+  <script>
+    const students = [];
+    const getGrade = score => {
+      if (score >= 80) return "A";
+      if (score >= 60) return "B";
+      if (score >= 40) return "C";
+      return "F";
+    };
+
+    const outputDiv = document.getElementById("output");
+    const marksForm = document.getElementById("marksForm");
+
+    function renderStudents() {
+      if (students.length === 0) {
+        outputDiv.innerHTML = "<p>No students added yet.</p>";
+        return;
+      }
+      let result = "";
+      for (const { name, subject, score } of students) {
+        result += `<p>${name} scored ${score} in <b>${subject}</b> and got grade <b>${getGrade(score)}</b></p>`;
+      }
+      outputDiv.innerHTML = result;
+    }
+
+    marksForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("studentName").value.trim();
+      const subject = document.getElementById("subjectName").value.trim();
+      const score = Number(document.getElementById("studentMarks").value);
+      if (!name || !subject || isNaN(score) || score < 0 || score > 100) {
+        alert("Please enter a valid name, subject, and marks (0-100).");
+        return;
+      }
+      students.push({ name, subject, score });
+      renderStudents();
+      marksForm.reset();
+    });
+
+    renderStudents();
+  </script>
+</body>
+</html>

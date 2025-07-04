@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Refactored Product List</title>
+</head>
+
+<body>
+    <h2>Product List</h2>
+    <div id="output"></div>
+    <script>
+        const products = [
+            { name: "Laptop", price: 50000 },
+            { name: "Phone", price: 20000 },
+            { name: "Headphones", price: 2500 }
+        ];
+        const displayProducts = products => {
+            let html = "";
+            for (const { name, price } of products) {
+                html += `<p>Product: <b>${name}</b> | Price: ₹${price}</p>`;
+            }
+            document.getElementById("output").innerHTML = html;
+        };
+        displayProducts(products);
+    </script>
+</body>
+
+</html>

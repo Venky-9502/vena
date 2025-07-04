@@ -1,93 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Shopping Cart Manager</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container:hover {
+            box-shadow: 0 0 100px rgb(255, 0, 0);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+    <title>Document</title>
 </head>
 
 <body>
-    <h2>Shopping Cart Manager</h2>
-    <input type="text" id="productName" placeholder="Product Name">
-    <input type="number" id="productPrice" placeholder="Product Price">
-    <button onclick="addProduct()">Add Product</button>
-    <button onclick="removeLastProduct()">Remove Last Product</button>
-    <button onclick="analyzeCart()">Analyze Cart</button>
-    <div id="output" style="margin-top:20px;"></div>
-
+    <div class="container">
+        <h1>String Utilities using Arrow Functions and Function Expressions</h1>
+        <label for="inputString">Enter a string:</label>
+        <input type="text" id="inputString" placeholder="Enter a string" />
+        <button id="uppercaseBtn" onclick="toUpperCase()">
+            Convert to Uppercase
+        </button>
+        <button id="countBtn" onclick="countLength()">Count Length</button>
+        <button id="reverseBtn" onclick="reverseString()">Reverse String</button>
+        <p id="outputText"></p>
+    </div>
     <script>
-        let cart = [];
+        // Arrow function to convert string to uppercase
+        const toUpperCase = () => {
+            const inputString = document.getElementById("inputString").value;
+            document.getElementById("outputText").innerText = inputString.toUpperCase();
+        };
 
-        function addProduct() {
-            const name = document.getElementById('productName').value.trim();
-            const price = Number(document.getElementById('productPrice').value);
-            if (name && !isNaN(price) && price > 0) {
-                cart.push({ name, price });
-                showCart();
-                document.getElementById('productName').value = "";
-                document.getElementById('productPrice').value = "";
-            } else {
-                alert("Please enter a valid product name and price.");
-            }
-        }
+        // Function expression to count string length
+        const countLength = function() {
+            const inputString = document.getElementById("inputString").value;
+            document.getElementById("outputText").innerText = `Length: ${inputString.length}`;
+        };
 
-        function removeLastProduct() {
-            if (cart.length > 0) {
-                cart.pop();
-                showCart();
-            } else {
-                alert("Cart is already empty.");
-            }
-        }
-
-        function analyzeCart() {
-            if (cart.length === 0) {
-                document.getElementById('output').innerHTML = "Cart is empty.";
-                return;
-            }
-
-            let output = "<b>All Products:</b><br>";
-            cart.forEach((product, i) => {
-                output += (i + 1) + ". " + product.name + " - ₹" + product.price + "<br>";
-            });
-
-            // Total price
-            const total = cart.reduce((sum, product) => sum + product.price, 0);
-            output += "<b>Total Price:</b> ₹" + total + "<br>";
-
-            // Products above 8500
-            const above8500 = cart.filter(product => product.price > 8500);
-            output += "<b>Products above ₹8500:</b> ";
-            if (above8500.length > 0) {
-                output += above8500.map(p => p.name + " (₹" + p.price + ")").join(", ") + "<br>";
-            } else {
-                output += "None<br>";
-            }
-
-            // Find a product by name
-            const searchName = prompt("Enter product name to search:");
-            if (searchName) {
-                const found = cart.find(product => product.name.toLowerCase() === searchName.trim().toLowerCase());
-                if (found) {
-                    output += "<b>Product found:</b> " + found.name + " - ₹" + found.price + "<br>";
-                } else {
-                    output += "<b>Product not found.</b><br>";
-                }
-            }
-
-            document.getElementById('output').innerHTML = output;
-        }
-
-        function showCart() {
-            if (cart.length === 0) {
-                document.getElementById('output').innerHTML = "Cart is empty.";
-                return;
-            }
-            let output = "<b>Current Cart:</b><br>";
-            cart.forEach((product, i) => {
-                output += (i + 1) + ". " + product.name + " - ₹" + product.price + "<br>";
-            });
-            document.getElementById('output').innerHTML = output;
-        }
+        // Arrow function to reverse the string
+        const reverseString = () => {
+            const inputString = document.getElementById("inputString").value;
+            document.getElementById("outputText").innerText = inputString.split("").reverse().join("");
+        };
     </script>
 </body>
 
