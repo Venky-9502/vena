@@ -1,94 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product List Manager</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
-            padding: 20px;
+            padding: 30px;
         }
+
         .container {
-            max-width: 400px;
+            max-width: 500px;
             margin: auto;
             background: white;
             padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .container:hover{
-            box-shadow: 0 0 100px rgb(255, 0, 0);
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
         }
-        label {
-            display: block;
-            margin-bottom: 10px;
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
         }
-        input, select, button {
-            width: 100%;
+
+        button {
+            padding: 10px 16px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #e8e8e8;
             padding: 10px;
             margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        </style>
-    <title>Document</title>
+
+        .actions button {
+            margin-left: 5px;
+        }
+    </style>
 </head>
+
 <body>
     <div class="container">
-        <label for="firstNum">First Number: </label>
-        <input type="number" id="firstNum" placeholder="Enter first number">
-        <label for="operation">operation</label>
-        <select id="operation">
-            <option value="add">+</option>
-            <option value="subtract">-</option>
-            <option value="multiply">*</option>
-            <option value="divide">/</option>
-            <option value="modulus">%</option>
-        </select>
-        <label for="secondNum">Second Number: </label>
-        <input type="number" id="secondNum" placeholder="Enter second number">
-        <button id="calculateBtn" onclick="cal()">Calculate</button>
-        <a href="Day13.html"><button >Back</button></a>
-        <div id="result"></div>
+        <h1>Product List Manager</h1>
+        <div class="input-group">
+            <input type="text" id="productInput" placeholder="Enter product name" />
+            <button onclick="addProduct()">Add Product</button>
+        </div>
+        <ul id="productList"></ul>
     </div>
-    <script >
-        function cal() {
-            const firstNum = parseFloat(document.getElementById('firstNum').value);
-            const secondNum = parseFloat(document.getElementById('secondNum').value);
-            const operation = document.getElementById('operation').value;
-            let result;
 
-            if (isNaN(firstNum) || isNaN(secondNum)) {
-                alert("Please enter valid numbers.");
-                return;
+    <script>
+        let products = [];
+
+        function addProduct() {
+            const input = document.getElementById('productInput');
+            const name = input.value.trim();
+
+            if (name) {
+                products.push(name);
+                input.value = '';
+                displayProducts();
+            } else {
+                alert("Please enter a product name.");
             }
+        }
 
-            switch (operation) {
-                case 'add':
-                    result = firstNum + secondNum;
-                    break;
-                case 'subtract':
-                    result = firstNum - secondNum;
-                    break;
-                case 'multiply':
-                    result = firstNum * secondNum;
-                    break;
-                case 'divide':
-                    if (secondNum === 0) {
-                        alert("Cannot divide by zero.");
-                        return;
-                    }
-                    result = firstNum / secondNum;
-                    break;
-                case 'modulus':
-                    result = firstNum % secondNum;
-                    break;
-                default:
-                    alert("Please select a valid operation.");
-                    return;
+        function displayProducts() {
+            const list = document.getElementById('productList');
+            list.innerHTML = '';
+
+            products.forEach((product, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+          ${product}
+          <div class="actions">
+            <button onclick="editProduct(${index})">Edit</button>
+            <button onclick="deleteProduct(${index})">Delete</button>
+          </div>
+        `;
+                list.appendChild(li);
+            });
+        }
+
+        function editProduct(index) {
+            const newName = prompt("Edit product name:", products[index]);
+            if (newName) {
+                products[index] = newName.trim();
+                displayProducts();
             }
+        }
 
-            document.getElementById('result').innerText = Result: ${result};
+        function deleteProduct(index) {
+            if (confirm("Are you sure you want to delete this product?")) {
+                products.splice(index, 1);
+                displayProducts();
+            }
         }
     </script>
 </body>
+
 </html>
